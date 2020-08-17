@@ -1,0 +1,75 @@
+1. Generating Your Private Key
+
+openssl genrsa -out yourdomain.key 2048
+
+Use the following command to view the raw, encoded contents (PEM format) of the private key:
+
+cat yourdomain.key
+
+Use the following command to decode the private key and view its contents:
+
+openssl rsa -text -in yourdomain.key -noout
+
+2. Extracting Your Public Key
+
+openssl rsa -in yourdomain.key -pubout -out yourdomain_public.key
+
+3. Creating Your CSR
+
+Use the following command to create a CSR using your newly generated private key:
+
+openssl req -new -key yourdomain.key -out yourdomain.csr \
+-subj "/C=US/ST=Utah/L=Lehi/O=Your Company, Inc./OU=IT/CN=yourdomain.com"
+
+-----------------------------------------------------
+
+Creating Your CSR with One Command
+
+Instead of generating a private key and then creating a CSR in two separate steps, you can actually perform both tasks at once.
+
+Use the following command to create both the private key and CSR:
+
+openssl req -new \
+-newkey rsa:2048 -nodes -keyout yourdomain.key \
+-out yourdomain.csr \
+-subj "/C=US/ST=Utah/L=Lehi/O=Your Company, Inc./OU=IT/CN=yourdomain.com"
+
+This command generates a new private key (-newkey) using the RSA algorithm with a 2048-bit key length (rsa:2048) without using a passphrase (-nodes) and then creates the key file with a name of yourdomain.key (-keyout yourdomain.key).
+
+The command then generates the CSR with a filename of yourdomain.csr (-out yourdomain.csr) and the information for the CSR is supplied (-subj).
+
+------------------------------------------------------
+
+Verifying CSR Information
+
+After creating your CSR using your private key, we recommend verifying that the information contained in the CSR is correct and that the file hasn't been modified or corrupted.
+
+Use the following command to view the information in your CSR before submitting it to a CA (e.g., DigiCert):
+
+openssl req -text -in yourdomain.csr -noout -verify
+
+The -noout switch omits the output of the encoded version of the CSR. The -verify switch checks the signature of the file to make sure it hasn't been modified.
+
+------------------------------------------------------
+Verify expiration date from the crt
+
+openssl x509 -enddate -noout -in  certificate.crt
+
+------------------------------------------------------
+
+openssl req -x509 -newkey rsa:4096 -keyout key.pem -out cert.pem -nodes -subj "/C=US/ST=Utah/L=Lehi/O=Your Company, Inc./OU=IT/CN=yourdomain.com" -days 365
+
+------------------------------------------------------
+
+Convertir PEM a CRT (archivo .CRT)
+
+openssl x509 -outform der -in certificate.pem -out certificate.crt
+
+------------------------------------------------------
+
+Comando completo:
+- fecha de duracion
+- ingresar a la ruta de creacion de la carpeta donde queres guardar el certificado
+- generar el certificado propio
+
+cd /opt/lampp/htdocs/SecOpsCert/certificados/ && openssl req -x509 -newkey rsa:4096 -keyout key.pem -out cert.pem -nodes -subj "/C=US/ST=Utah/L=Lehi/O=Your Company, Inc./OU=IT/CN=yourdomain.com" -days 365
