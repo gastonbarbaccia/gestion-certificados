@@ -19,7 +19,7 @@
   <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
 </head>
 <body class="hold-transition login-page" style="background-image: url('img/security.jpg');background-size:cover;">
-<div class="login-box" style="margin-right: 50%; opacity:0.7;">
+<div class="login-box" style="opacity:0.7;">
 
   <!-- /.login-logo -->
   <div class="card">
